@@ -14,6 +14,8 @@ Membuat folder **nature2** untuk menampung hasil dekripsi file-file:
 mkdir /home/durianpeople/Downloads/nature2
 ```
 
+
+
 Loop untuk setiap file dalam folder **nature**, *decrypt* menggunakan Base64 kemudian melakukan reverse hexdump menggunakan xxd
 
 ```bash
@@ -23,5 +25,11 @@ for i in `ls /home/durianpeople/Downloads/nature/`; do
 done
 ```
 
+## SOAL 2
 
+## SOAL 3
+
+## SOAL 4
+
+## SOAL 5
 

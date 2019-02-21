@@ -31,7 +31,12 @@ print productline[i]","i
 # echo "================"
 
 for i in {0..2}; do
-echo "Product Line: ${result2[$i]}"
+echo "${result2[$i]}"
+done
+
+echo "================"
+
+for i in {0..2}; do
 cat /home/durianpeople/Downloads/WA_Sales_Products_2012-14.csv | awk -F, -v pattern="${result2[$i]}" '
 $4 ~ pattern {
 product[$6] += $10
@@ -41,5 +46,5 @@ for (i in product) {
 print product[i]","i
 }
 }
-' | sort -nr | awk -F, 'NR <= 3 {print "    "$2}'
-done
+'
+done | sort -nr | awk -F, 'NR <=3 {print $2}'
