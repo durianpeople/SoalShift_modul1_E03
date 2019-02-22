@@ -141,7 +141,76 @@ done
 
 ## SOAL 3
 
+Pertama - tama kita membuat password generator, dengan syarat terdapat minimal 1 UPPERCASE, 1 LOWERCASE, dan 1 angka. untuk password random generator saya mengambil dari 
+https://stackoverflow.com/questions/26665389/random-password-generator-bash
+
+script bash yang digunakan adalah 
+```bash
+choose() { echo ${1:RANDOM%${#1}:1} $RANDOM; }
+pass="$({   choose '0123456789'
+  choose 'abcdefghijklmnopqrstuvwxyz'
+  choose 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  for i in $( seq 1 $(( 9 )) )
+     do
+        choose '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+     done
+ } | sort -R | awk '{printf "%s",$1}')"
+```
+
+untuk script diatas, pertama-tama mangambil 1 nilai huruf besar, 1 huruf kecil, dan 1 angka masing-masing secara random, yang kemudian baru ditambahkan 9 char/integer secara random.
+
+### A
+
+Script dijalankan dimulai dengan parameter yaitu flag yang bernilai 1, sehingga bila belum ada Password1.txt, maka random password akan diletakkan pada file Password1.txt.
+
+```bash
+flag=1
+while true
+do
+if [ ! -f /home/akmal/Documents/Password$flag.txt ]
+then
+  echo $pass > /home/akmal/Documents/Password$flag.txt
+  break
+```
+
+### B
+
+Apabila file Password1.txt sudah ada maka random password akan diletakkan pada file Password2.txt, begitu seterusnya. Pada script digunakan perulangan while true dan logika if else, dengan kondisi apabila nilai Password$flag.txt belum ada, maka random password akan diletakkan pada file Password$flag.txt saat itu, dan apabila sudah ada maka flag = flag + 1, dan looping dilakukan kembali.
+
+```bash
+flag=1
+while true
+do
+if [ ! -f /home/akmal/Documents/Password$flag.txt ]
+then
+  echo $pass > /home/akmal/Documents/Password$flag.txt
+  break
+else  
+  flag=$((flag + 1))
+fi
+done
+
+```
+
+### C
+
+Karena flag selalu dimulai dari 1, sehingga apabila ada file Password1.txt, Password2.txt, Password3.txt dan file Password2.txt dihapus, maka ketika file bash script random password dijalankan, random password akan diletakkan pada file Password2.txt, bukan file Password4.txt.
+
+### D
+
+Untuk Password tidak akan mengenerate password yang sudah pernah digunakan.
+
 ## SOAL 4
 
 ## SOAL 5
+
+### A, B, dan C
+
+Dengan 1 line Script
+
+```bash
+cat /var/log/syslog | awk '$0 !~ /sudo/ {print}' | awk 'IGNORECASE=1; /cron/ {print}' | awk 'NF < 12' > /home/akmal/modul1
+```
+
+untuk configurasi crontab ada di file crontab
 
