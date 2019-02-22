@@ -292,6 +292,13 @@ filename=`echo $path | awk -F/ '{print $NF}' | awk -F "'" '{print $1}' | awk -F.
 tr "${dest[*]}" "${source[*]}" < "$path" > "/home/durianpeople/Documents/Notes/SISOP/$filename.decrypted"
 ```
 
+### crontab
+
+```
+0 0-23 * * * /bin/bash /home/durianpeople/Documents/Notes/SISOP/soal4.sh
+```
+
+
 
 ## SOAL 5
 
@@ -303,5 +310,8 @@ Dengan 1 line Script
 cat /var/log/syslog | awk '$0 !~ /sudo/ {print}' | awk 'IGNORECASE=1; /cron/ {print}' | awk 'NF < 12' > /home/akmal/modul1
 ```
 
-untuk configurasi crontab ada di file crontab
+### crontab
 
+```
+2-30/6 * * * * /bin/bash /home/akmal/Documents/soal5.sh
+```
