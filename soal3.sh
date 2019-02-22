@@ -16,10 +16,7 @@ if [ ! -f /home/akmal/Documents/Password$flag.txt ]
 then
 	echo $pass > /home/akmal/Documents/Password$flag.txt
 	break
-	#flag=$((flag + 1))
-else
-	#echo $pass > /home/akmal/Documents/Password$flag.txt
-        #break	
+else	
 	flag=$((flag + 1))
 fi
 done
