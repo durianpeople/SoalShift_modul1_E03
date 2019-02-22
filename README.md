@@ -202,6 +202,42 @@ Untuk Password tidak akan mengenerate password yang sudah pernah digunakan.
 
 ## SOAL 4
 
+### A
+
+Extract jam pada saat script akan dilakukan
+
+```bash
+hour=`date +"%H"`
+```
+
+### B
+### C
+### D
+
+Configurasi crontab ada di file crontab
+
+### E
+
+Untuk decrypt, hampir sama dengan encrypt hanya saja dibalik, dan parameter decrypt sama seperti parameter ketika backup dijalankan (parameter = jam kejadian backup). 
+
+Extract parameter
+
+```bash
+echo "Ketik path ke file"
+read path
+hour=`echo $path | awk -F/ '{print $NF}' | awk -F: '{print $1}'`
+```
+
+Karena menggunakan variabel yang sama seperti script encrypt, maka dari dest -> source
+
+```bash
+filename=`echo $path | awk -F/ '{print $NF}' | awk -F "'" '{print $1}' | awk -F. '{print $1}'`
+
+
+tr "${dest[*]}" "${source[*]}" < "$path" > "/home/durianpeople/Documents/Notes/SISOP/$filename.decrypted"
+```
+
+
 ## SOAL 5
 
 ### A, B, dan C
