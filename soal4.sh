@@ -1,6 +1,6 @@
 #!/bin/bash
 
-hour=`date +"%H"`
+hour=`date +"%-H"`
 sourcelower=({a..z})
 sourceupper=({A..Z})
 offset=$(($hour % 26))

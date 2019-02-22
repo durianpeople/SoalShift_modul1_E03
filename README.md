@@ -2,6 +2,8 @@
 
 ## SOAL 1
 
+### Bash script
+
 Meng-unzip file .zip ke dalam sebuah folder:
 
 ```bash
@@ -31,6 +33,14 @@ for i in `ls /home/durianpeople/Downloads/nature/`; do
 	base64 -d /home/durianpeople/Downloads/nature/$i | 
 	xxd -r > /home/durianpeople/Downloads/nature2/$i; 
 done
+```
+
+### crontab
+
+Entri crontab untuk soal ini
+
+```
+14 14 14 2 5 /bin/bash /<path>/<ke>/soal1.sh
 ```
 
 ## SOAL 2
@@ -142,6 +152,88 @@ done
 ## SOAL 3
 
 ## SOAL 4
+
+### Enkripsi
+
+Mengambil jam sekarang, tanpa nol di depan angka
+
+```bash
+hour=`date +"%-H"`
+```
+
+Membuat array dengan range (a..z) dan (A..Z)
+
+```bash
+sourcelower=({a..z})
+sourceupper=({A..Z})
+```
+
+Menghitung huruf harus digeser berapa banyak, berdasarkan **$hour**
+
+```bash
+offset=$(($hour % 26))
+```
+
+Memastikan, jika **$offset** kurang dari nol maka dijadikan nol
+
+```bash
+if [ "$offset" -lt 0 ]; then
+    offset=0
+fi
+```
+
+Menambahkan array **$sourcelower** dan **$sourceupper** dengan **$offset** untuk enkripsi
+
+```bash
+destlower=(${sourcelower[*]:$offset} ${sourcelower[*]:0:$offset})
+destupper=(${sourceupper[*]:$offset} ${sourceupper[*]:0:$offset})
+```
+
+Menggabungkan array-array tersebut
+
+```bash
+source=(${sourcelower[*]} ${sourceupper[*]})
+dest=(${destlower[*]} ${destupper[*]})
+```
+
+Menggunakan perintah **tr** untuk mentranslasi file sumber menggunakan daftar perubahan dari array **$source** dan **$dest**
+
+```bash
+cat /var/log/syslog | 
+tr "${source[*]}" "${dest[*]}" > "/home/durianpeople/Documents/Notes/SISOP/`date +"%H:%M %d-%m-%Y"`.encrypted"
+```
+
+### Dekripsi
+
+Melalui proses yang sama, namun dibalik dari **$dest** ke **$source**, serta menerima path menuju file yang terenkripsi untuk didekripsi
+
+```bash
+echo "Ketik path ke file"
+read path
+hour=`echo $path | awk -F/ '{print $NF}' | awk -F: '{print $1}'`
+
+sourcelower=({a..z})
+sourceupper=({A..Z})
+offset=$(($hour % 26))
+if [ "$offset" -lt 0 ]; then
+    offset=0
+fi
+destlower=(${sourcelower[*]:$offset} ${sourcelower[*]:0:$offset})
+destupper=(${sourceupper[*]:$offset} ${sourceupper[*]:0:$offset})
+
+source=(${sourcelower[*]} ${sourceupper[*]})
+dest=(${destlower[*]} ${destupper[*]})
+
+echo "${dest[*]}"
+echo "${source[*]}"
+
+filename=`echo $path | awk -F/ '{print $NF}' | awk -F "'" '{print $1}' | awk -F. '{print $1}'`
+
+
+tr "${dest[*]}" "${source[*]}" < "$path" > "/home/durianpeople/Documents/Notes/SISOP/$filename.decrypted"
+```
+
+
 
 ## SOAL 5
 
